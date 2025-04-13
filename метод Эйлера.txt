@@ -1,0 +1,22 @@
+Функция: y'(t0) = (t0 + t0 * y0 * y0) / (y0 - t0 * t0 * y0)
+
+ public static void task1()
+    {
+        double h = 0.1;
+        double y0 = 1;
+        double t0 = 0;
+        double y = 0;
+        List<double> results = new List<double>();
+        while (Math.Round(t0, 1) < 1)
+        {
+            y = y0 + h * (t0 + t0 * y0 * y0) / (y0 - t0 * t0 * y0);
+            t0 += h;
+            y0 = y;
+            results.Add(y);
+        }
+        foreach (double x in results)
+        {
+            Console.Write(Math.Round(x, 6) + "   ");
+        }
+        Console.WriteLine("\nОтвет y(1) = : " + Math.Round(results[results.Count - 1], 6));
+    }

@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище CityBusStationModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Autorization">
+    <Key>
+      <PropertyRef Name="IDAut" />
+    </Key>
+    <Property Name="IDAut" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role" Type="int" Nullable="false" />
+    <Property Name="Login" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="Password" Type="char" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Buses">
+    <Key>
+      <PropertyRef Name="IDBus" />
+    </Key>
+    <Property Name="IDBus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Carrier" Type="int" Nullable="false" />
+    <Property Name="BusNumber" Type="nchar" MaxLength="6" Nullable="false" />
+    <Property Name="NumberOfSeats" Type="int" Nullable="false" />
+    <Property Name="FireExtinguisher" Type="bit" />
+  </EntityType>
+  <EntityType Name="Carriers">
+    <Key>
+      <PropertyRef Name="IDCarrier" />
+    </Key>
+    <Property Name="IDCarrier" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Destinations">
+    <Key>
+      <PropertyRef Name="IDDestination" />
+    </Key>
+    <Property Name="IDDestination" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Street" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="House" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Drivers">
+    <Key>
+      <PropertyRef Name="IDDriver" />
+    </Key>
+    <Property Name="IDDriver" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Patronymic" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Age" Type="int" />
+    <Property Name="YearsOfDrivingExperience" Type="int" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="IDRole" />
+    </Key>
+    <Property Name="IDRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Routes">
+    <Key>
+      <PropertyRef Name="IDRoute" />
+    </Key>
+    <Property Name="IDRoute" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlaceOfDeparture" Type="int" Nullable="false" />
+    <Property Name="PlaceOfArrival" Type="int" Nullable="false" />
+    <Property Name="TimeOfDeparture" Type="time" Precision="0" Nullable="false" />
+    <Property Name="TravelTimeInHours" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Schedules">
+    <Key>
+      <PropertyRef Name="IDSchedule" />
+    </Key>
+    <Property Name="IDSchedule" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Route" Type="int" Nullable="false" />
+    <Property Name="DepartureDate" Type="date" Nullable="false" />
+    <Property Name="Bus" Type="int" Nullable="false" />
+    <Property Name="Driver" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tickets">
+    <Key>
+      <PropertyRef Name="IDTicket" />
+    </Key>
+    <Property Name="IDTicket" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Patronymic" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="PassportSeriesAndNumber" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Schedule" Type="int" Nullable="false" />
+    <Property Name="PlaceNumber" Type="int" Nullable="false" />
+    <Property Name="Pets" Type="bit" />
+    <Property Name="BoughtOut" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Autorization_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Autorization" Type="Self.Autorization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="IDRole" />
+      </Principal>
+      <Dependent Role="Autorization">
+        <PropertyRef Name="Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Buses_Carriers">
+    <End Role="Carriers" Type="Self.Carriers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Buses" Type="Self.Buses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Carriers">
+        <PropertyRef Name="IDCarrier" />
+      </Principal>
+      <Dependent Role="Buses">
+        <PropertyRef Name="Carrier" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Routes_Destinations">
+    <End Role="Destinations" Type="Self.Destinations" Multiplicity="1" />
+    <End Role="Routes" Type="Self.Routes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Destinations">
+        <PropertyRef Name="IDDestination" />
+      </Principal>
+      <Dependent Role="Routes">
+        <PropertyRef Name="PlaceOfDeparture" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Routes_Destinations1">
+    <End Role="Destinations" Type="Self.Destinations" Multiplicity="1" />
+    <End Role="Routes" Type="Self.Routes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Destinations">
+        <PropertyRef Name="IDDestination" />
+      </Principal>
+      <Dependent Role="Routes">
+        <PropertyRef Name="PlaceOfArrival" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Schedules_Buses">
+    <End Role="Buses" Type="Self.Buses" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buses">
+        <PropertyRef Name="IDBus" />
+      </Principal>
+      <Dependent Role="Schedules">
+        <PropertyRef Name="Bus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Schedules_Drivers">
+    <End Role="Drivers" Type="Self.Drivers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drivers">
+        <PropertyRef Name="IDDriver" />
+      </Principal>
+      <Dependent Role="Schedules">
+        <PropertyRef Name="Driver" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Schedules_Routes">
+    <End Role="Routes" Type="Self.Routes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Routes">
+        <PropertyRef Name="IDRoute" />
+      </Principal>
+      <Dependent Role="Schedules">
+        <PropertyRef Name="Route" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Schedules">
+    <End Role="Schedules" Type="Self.Schedules" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schedules">
+        <PropertyRef Name="IDSchedule" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="Schedule" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище CityBusStationModelContainer">
+    <EntitySet Name="Autorization" EntityType="Self.Autorization" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Buses" EntityType="Self.Buses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Carriers" EntityType="Self.Carriers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Destinations" EntityType="Self.Destinations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Routes" EntityType="Self.Routes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Schedules" EntityType="Self.Schedules" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Autorization_Roles" Association="Self.FK_Autorization_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Autorization" EntitySet="Autorization" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Buses_Carriers" Association="Self.FK_Buses_Carriers">
+      <End Role="Carriers" EntitySet="Carriers" />
+      <End Role="Buses" EntitySet="Buses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Routes_Destinations" Association="Self.FK_Routes_Destinations">
+      <End Role="Destinations" EntitySet="Destinations" />
+      <End Role="Routes" EntitySet="Routes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Routes_Destinations1" Association="Self.FK_Routes_Destinations1">
+      <End Role="Destinations" EntitySet="Destinations" />
+      <End Role="Routes" EntitySet="Routes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schedules_Buses" Association="Self.FK_Schedules_Buses">
+      <End Role="Buses" EntitySet="Buses" />
+      <End Role="Schedules" EntitySet="Schedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schedules_Drivers" Association="Self.FK_Schedules_Drivers">
+      <End Role="Drivers" EntitySet="Drivers" />
+      <End Role="Schedules" EntitySet="Schedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schedules_Routes" Association="Self.FK_Schedules_Routes">
+      <End Role="Routes" EntitySet="Routes" />
+      <End Role="Schedules" EntitySet="Schedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Schedules" Association="Self.FK_Tickets_Schedules">
+      <End Role="Schedules" EntitySet="Schedules" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

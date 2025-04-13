@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CityBusStationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Buses">
+    <Key>
+      <PropertyRef Name="IDBus" />
+    </Key>
+    <Property Name="IDBus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Carrier" Type="Int32" Nullable="false" />
+    <Property Name="BusNumber" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="NumberOfSeats" Type="Int32" Nullable="false" />
+    <Property Name="FireExtinguisher" Type="Boolean" />
+    <NavigationProperty Name="Carriers" Relationship="Self.FK_Buses_Carriers" FromRole="Buses" ToRole="Carriers" />
+    <NavigationProperty Name="Schedules" Relationship="Self.FK_Schedules_Buses" FromRole="Buses" ToRole="Schedules" />
+  </EntityType>
+  <EntityType Name="Carriers">
+    <Key>
+      <PropertyRef Name="IDCarrier" />
+    </Key>
+    <Property Name="IDCarrier" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Buses" Relationship="Self.FK_Buses_Carriers" FromRole="Carriers" ToRole="Buses" />
+  </EntityType>
+  <EntityType Name="Destinations">
+    <Key>
+      <PropertyRef Name="IDDestination" />
+    </Key>
+    <Property Name="IDDestination" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Street" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="House" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Routes" Relationship="Self.FK_Routes_Destinations" FromRole="Destinations" ToRole="Routes" />
+    <NavigationProperty Name="Routes1" Relationship="Self.FK_Routes_Destinations1" FromRole="Destinations" ToRole="Routes" />
+  </EntityType>
+  <EntityType Name="Drivers">
+    <Key>
+      <PropertyRef Name="IDDriver" />
+    </Key>
+    <Property Name="IDDriver" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Patronymic" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="YearsOfDrivingExperience" Type="Int32" />
+    <NavigationProperty Name="Schedules" Relationship="Self.FK_Schedules_Drivers" FromRole="Drivers" ToRole="Schedules" />
+  </EntityType>
+  <EntityType Name="Routes">
+    <Key>
+      <PropertyRef Name="IDRoute" />
+    </Key>
+    <Property Name="IDRoute" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PlaceOfDeparture" Type="Int32" Nullable="false" />
+    <Property Name="PlaceOfArrival" Type="Int32" Nullable="false" />
+    <Property Name="TimeOfDeparture" Type="Time" Nullable="false" Precision="0" />
+    <Property Name="TravelTimeInHours" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Destinations" Relationship="Self.FK_Routes_Destinations" FromRole="Routes" ToRole="Destinations" />
+    <NavigationProperty Name="Destinations1" Relationship="Self.FK_Routes_Destinations1" FromRole="Routes" ToRole="Destinations" />
+    <NavigationProperty Name="Schedules" Relationship="Self.FK_Schedules_Routes" FromRole="Routes" ToRole="Schedules" />
+  </EntityType>
+  <EntityType Name="Schedules">
+    <Key>
+      <PropertyRef Name="IDSchedule" />
+    </Key>
+    <Property Name="IDSchedule" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Route" Type="Int32" Nullable="false" />
+    <Property Name="DepartureDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Bus" Type="Int32" Nullable="false" />
+    <Property Name="Driver" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Buses" Relationship="Self.FK_Schedules_Buses" FromRole="Schedules" ToRole="Buses" />
+    <NavigationProperty Name="Drivers" Relationship="Self.FK_Schedules_Drivers" FromRole="Schedules" ToRole="Drivers" />
+    <NavigationProperty Name="Routes" Relationship="Self.FK_Schedules_Routes" FromRole="Schedules" ToRole="Routes" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Schedules" FromRole="Schedules" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tickets">
+    <Key>
+      <PropertyRef Name="IDTicket" />
+    </Key>
+    <Property Name="IDTicket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Surname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Patronymic" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="PassportSeriesAndNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Schedule" Type="Int32" Nullable="false" />
+    <Property Name="PlaceNumber" Type="Int32" Nullable="false" />
+    <Property Name="Pets" Type="Boolean" />
+    <Property Name="BoughtOut" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Schedules" Relationship="Self.FK_Tickets_Schedules" FromRole="Tickets" ToRole="Schedules" />
+  </EntityType>
+  <Association Name="FK_Buses_Carriers">
+    <End Role="Carriers" Type="Self.Carriers" Multiplicity="1" />
+    <End Role="Buses" Type="Self.Buses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Carriers">
+        <PropertyRef Name="IDCarrier" />
+      </Principal>
+      <Dependent Role="Buses">
+        <PropertyRef Name="Carrier" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Schedules_Buses">
+    <End Role="Buses" Type="Self.Buses" Multiplicity="1" />
+    <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buses">
+        <PropertyRef Name="IDBus" />
+      </Principal>
+      <Dependent Role="Schedules">
+        <PropertyRef Name="Bus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Routes_Destinations">
+    <End Role="Destinations" Type="Self.Destinations" Multiplicity="1" />
+    <End Role="Routes" Type="Self.Routes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Destinations">
+        <PropertyRef Name="IDDestination" />
+      </Principal>
+      <Dependent Role="Routes">
+        <PropertyRef Name="PlaceOfDeparture" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Routes_Destinations1">
+    <End Role="Destinations" Type="Self.Destinations" Multiplicity="1" />
+    <End Role="Routes" Type="Self.Routes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Destinations">
+        <PropertyRef Name="IDDestination" />
+      </Principal>
+      <Dependent Role="Routes">
+        <PropertyRef Name="PlaceOfArrival" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Schedules_Drivers">
+    <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+    <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drivers">
+        <PropertyRef Name="IDDriver" />
+      </Principal>
+      <Dependent Role="Schedules">
+        <PropertyRef Name="Driver" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Schedules_Routes">
+    <End Role="Routes" Type="Self.Routes" Multiplicity="1" />
+    <End Role="Schedules" Type="Self.Schedules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Routes">
+        <PropertyRef Name="IDRoute" />
+      </Principal>
+      <Dependent Role="Schedules">
+        <PropertyRef Name="Route" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tickets_Schedules">
+    <End Role="Schedules" Type="Self.Schedules" Multiplicity="1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schedules">
+        <PropertyRef Name="IDSchedule" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="Schedule" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CityBusStationEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Buses" EntityType="Self.Buses" />
+    <EntitySet Name="Carriers" EntityType="Self.Carriers" />
+    <EntitySet Name="Destinations" EntityType="Self.Destinations" />
+    <EntitySet Name="Drivers" EntityType="Self.Drivers" />
+    <EntitySet Name="Routes" EntityType="Self.Routes" />
+    <EntitySet Name="Schedules" EntityType="Self.Schedules" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Tickets" EntityType="Self.Tickets" />
+    <AssociationSet Name="FK_Buses_Carriers" Association="Self.FK_Buses_Carriers">
+      <End Role="Carriers" EntitySet="Carriers" />
+      <End Role="Buses" EntitySet="Buses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schedules_Buses" Association="Self.FK_Schedules_Buses">
+      <End Role="Buses" EntitySet="Buses" />
+      <End Role="Schedules" EntitySet="Schedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Routes_Destinations" Association="Self.FK_Routes_Destinations">
+      <End Role="Destinations" EntitySet="Destinations" />
+      <End Role="Routes" EntitySet="Routes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Routes_Destinations1" Association="Self.FK_Routes_Destinations1">
+      <End Role="Destinations" EntitySet="Destinations" />
+      <End Role="Routes" EntitySet="Routes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schedules_Drivers" Association="Self.FK_Schedules_Drivers">
+      <End Role="Drivers" EntitySet="Drivers" />
+      <End Role="Schedules" EntitySet="Schedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Schedules_Routes" Association="Self.FK_Schedules_Routes">
+      <End Role="Routes" EntitySet="Routes" />
+      <End Role="Schedules" EntitySet="Schedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tickets_Schedules" Association="Self.FK_Tickets_Schedules">
+      <End Role="Schedules" EntitySet="Schedules" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <EntitySet Name="Autorization" EntityType="CityBusStationModel.Autorization" />
+    <EntitySet Name="Roles" EntityType="CityBusStationModel.Roles" />
+    <AssociationSet Name="FK_Autorization_Roles" Association="CityBusStationModel.FK_Autorization_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Autorization" EntitySet="Autorization" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Autorization">
+    <Key>
+      <PropertyRef Name="IDAut" />
+    </Key>
+    <Property Name="IDAut" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role" Type="Int32" Nullable="false" />
+    <Property Name="Login" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Roles" Relationship="CityBusStationModel.FK_Autorization_Roles" FromRole="Autorization" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="IDRole" />
+    </Key>
+    <Property Name="IDRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Autorization" Relationship="CityBusStationModel.FK_Autorization_Roles" FromRole="Roles" ToRole="Autorization" />
+  </EntityType>
+  <Association Name="FK_Autorization_Roles">
+    <End Type="CityBusStationModel.Roles" Role="Roles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="CityBusStationModel.Autorization" Role="Autorization" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="IDRole" />
+      </Principal>
+      <Dependent Role="Autorization">
+        <PropertyRef Name="Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

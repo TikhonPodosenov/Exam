@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2b67e5877b6a40cfbcbeb4f9961595f9" Name="Diagram1" ZoomLevel="47">
+        <EntityTypeShape EntityType="CityBusStationModel.Buses" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityBusStationModel.Carriers" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityBusStationModel.Destinations" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityBusStationModel.Drivers" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityBusStationModel.Routes" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityBusStationModel.Schedules" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityBusStationModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityBusStationModel.Tickets" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="CityBusStationModel.FK_Buses_Carriers" ManuallyRouted="false" />
+        <AssociationConnector Association="CityBusStationModel.FK_Schedules_Buses" ManuallyRouted="false" />
+        <AssociationConnector Association="CityBusStationModel.FK_Routes_Destinations" ManuallyRouted="false" />
+        <AssociationConnector Association="CityBusStationModel.FK_Routes_Destinations1" ManuallyRouted="false" />
+        <AssociationConnector Association="CityBusStationModel.FK_Schedules_Drivers" ManuallyRouted="false" />
+        <AssociationConnector Association="CityBusStationModel.FK_Schedules_Routes" ManuallyRouted="false" />
+        <AssociationConnector Association="CityBusStationModel.FK_Tickets_Schedules" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CityBusStationModel.Autorization" Width="1.5" PointX="10.625" PointY="5.875" />
+        <EntityTypeShape EntityType="CityBusStationModel.Roles" Width="1.5" PointX="8.375" PointY="6.125" />
+        <AssociationConnector Association="CityBusStationModel.FK_Autorization_Roles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
